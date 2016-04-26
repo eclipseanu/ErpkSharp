@@ -13,6 +13,7 @@ namespace Erpk.Http
         private readonly HttpClient _netClient;
         private readonly HttpRequestMessage _netRequest;
         private bool _autologin = true;
+        private bool _csrfToken;
 
         public Request(Uri uri, HttpMethod method, Client client, HttpClient netClient)
         {
@@ -54,7 +55,7 @@ namespace Erpk.Http
         /// </summary>
         public Request CSRF()
         {
-            Form.Add("_token", _client.Session.Token);
+            _csrfToken = true;
             return this;
         }
 
@@ -78,6 +79,10 @@ namespace Erpk.Http
 
             if (Form.FieldsCount > 0)
             {
+                if (_csrfToken)
+                {
+                    Form.Add("_token", _client.Session.Token);
+                }
                 _netRequest.Content = Form.Encode();
             }
 
