@@ -49,8 +49,8 @@ namespace Erpk.Models.MyPlaces
                     @"([\d,]+)\/([\d,]+)");
 
                 StorageSlots = new ItemSlots(
-                    int.Parse(slots.Groups[1].Value.Replace(",", "")),
-                    int.Parse(slots.Groups[2].Value.Replace(",", ""))
+                    int.Parse(slots.Groups[2].Value.Replace(",", "")),
+                    int.Parse(slots.Groups[1].Value.Replace(",", ""))
                     );
             }
             catch
