@@ -16,8 +16,12 @@ namespace Erpk.Http
 
         public void Add(string key, string val) => _fields.Add(key, val);
         public void Add(string key, int val) => _fields.Add(key, val.ToString(CultureInfo.InvariantCulture));
+        public void Add(string key, uint val) => _fields.Add(key, val.ToString(CultureInfo.InvariantCulture));
+        public void Add(string key, long val) => _fields.Add(key, val.ToString(CultureInfo.InvariantCulture));
+        public void Add(string key, ulong val) => _fields.Add(key, val.ToString(CultureInfo.InvariantCulture));
         public void Add(string key, float val) => _fields.Add(key, val.ToString(CultureInfo.InvariantCulture));
         public void Add(string key, double val) => _fields.Add(key, val.ToString(CultureInfo.InvariantCulture));
+        public void Add(string key, decimal val) => _fields.Add(key, val.ToString(CultureInfo.InvariantCulture));
         public void Add(string key, bool val) => Add(key, val ? 1 : 0);
 
         /// <summary>
