@@ -5,8 +5,9 @@ namespace Erpk.Models.Activities
 {
     public enum DailyTasksResultMessage
     {
-        [JsonEnum("error")] Error,
-        [JsonEnum("success")] Success
+        [JsonEnum("success")] Success,
+        [JsonEnum("tasks not completed")] TasksNotCompleted,
+        [JsonEnum("error")] Error
     }
 
     public class DailyTasksResponseJson
