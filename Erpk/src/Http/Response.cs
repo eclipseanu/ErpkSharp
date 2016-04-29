@@ -70,7 +70,7 @@ namespace Erpk.Http
             {
                 Logger.Error(e);
                 Logger.Trace("Corrupted JSON: {0}", ContentAsString);
-                return default(T);
+                throw;
             }
         }
 
