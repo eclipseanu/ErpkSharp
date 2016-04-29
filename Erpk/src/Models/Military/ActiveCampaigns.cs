@@ -1,14 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using Erpk.Json;
 using Newtonsoft.Json;
 
 namespace Erpk.Models.Military
 {
     public class CampaignsModelJson
     {
-        public ulong request_time { get; set; }
-        public ulong last_updated { get; set; }
+        [JsonProperty("request_time")]
+        [JsonConverter(typeof(UnixTimestampConverter))]
+        public DateTimeOffset RequestTime { get; set; }
+
+        [JsonProperty("last_updated")]
+        [JsonConverter(typeof(UnixTimestampConverter))]
+        public DateTimeOffset LastUpdated { get; set; }
 
         [JsonProperty("battles")]
         public Dictionary<int, CampaignJson> Campaigns { get; set; }
@@ -32,9 +38,8 @@ namespace Erpk.Models.Military
         public bool IsAirstrike { get; set; }
 
         [JsonProperty("start")]
-        public long StartTimestamp { get; set; }
-
-        public DateTimeOffset StartDateTime => DateTimeOffset.FromUnixTimeSeconds(StartTimestamp);
+        [JsonConverter(typeof(UnixTimestampConverter))]
+        public DateTimeOffset StartTime { get; set; }
 
         [JsonProperty("det")]
         public double Determination { get; set; }
@@ -75,11 +80,8 @@ namespace Erpk.Models.Military
         public int DivisionNumber { get; set; }
 
         [JsonProperty("end")]
-        public long? EndTimestamp { get; set; }
-
-        public DateTimeOffset? EndDateTime => EndTimestamp.HasValue
-            ? DateTimeOffset.FromUnixTimeSeconds(EndTimestamp.Value)
-            : (DateTimeOffset?) null;
+        [JsonConverter(typeof(UnixTimestampConverter))]
+        public DateTimeOffset? EndTime { get; set; }
 
         [JsonProperty("epic")]
         public int Epic { get; set; }
