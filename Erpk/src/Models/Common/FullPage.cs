@@ -96,6 +96,7 @@ namespace Erpk.Models.Common
 
             CitizenshipCountryId = intVars["country"];
             ResidenceCountryId = intVars["countryLocationId"];
+            Division = intVars["division"];
 
             try
             {
@@ -146,6 +147,11 @@ namespace Erpk.Models.Common
         public bool IsOrganization { get; }
 
         /// <summary>
+        ///     Citizen's division.
+        /// </summary>
+        public int Division { get; }
+
+        /// <summary>
         ///     Citizenship country of citizen.
         /// </summary>
         public int CitizenshipCountryId { get; }
@@ -168,7 +174,7 @@ namespace Erpk.Models.Common
         private static Dictionary<string, int> ParseIntegerVariables(string script)
         {
             var matches = Regex.Matches(script,
-                @"(?:(citizenId|energy|gold|currencyAmount|userLevel|canWorkTrainAgainIn|currentExperiencePoints|energyToRecover|country|countryLocationId)\s*:\s*'?(\d+))");
+                @"(?:(citizenId|energy|gold|currencyAmount|userLevel|canWorkTrainAgainIn|currentExperiencePoints|energyToRecover|country|countryLocationId|division)\s*:\s*'?(\d+))");
 
             var vars = new Dictionary<string, int>();
 
