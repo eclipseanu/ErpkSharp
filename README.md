@@ -66,7 +66,7 @@ var res = await req.Send();
 ```
 
 ## Code samples
-### Work in companies
+### Working in companies
 ```csharp
 var mod = client.Resolve<WorkModule>();
 
@@ -85,4 +85,18 @@ var queue = companiesPage
     .Select(c => new ProductionTask(c.id, true));
     
 var resultManager = await mod.WorkAsManager(queue);
+```
+
+### Training
+```csharp
+var mod = client.Resolve<TrainModule>();
+
+var trainPage = await mod.MyTrainingGroundsPage();
+var queue = trainPage
+    .TrainingGrounds
+    .Where(g => !g.trained) // Select only training grounds where you haven't trained.
+    .Where(g => g.cost == 0) // Select only free training grounds.
+    .Select(g => g.id);
+
+var trainResult = await mod.Train(queue);
 ```
