@@ -64,3 +64,25 @@ req.Form.Add("battleId", 76608);
 
 var res = await req.Send();
 ```
+
+## Code samples
+### Work in companies
+```csharp
+var mod = client.Resolve<WorkModule>();
+
+// Work as employee.
+var resultEmployee = await mod.WorkAsEmployee();
+
+// Work overtime.
+var resultOvertime = await mod.WorkOvertime();
+
+// Work as manager.
+var companiesPage = await mod.MyCompaniesPage();
+var queue = companiesPage
+    .Companies
+    .Where(c => !c.already_worked) // Ignore companies where you've already worked.
+    .Where(c => c.industry_token != "HOUSE") // You can't work as manager in house companies.
+    .Select(c => new ProductionTask(c.id, true));
+    
+var resultManager = await mod.WorkAsManager(queue);
+```
