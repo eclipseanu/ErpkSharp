@@ -17,19 +17,32 @@ namespace Erpk.Modules
         public async Task<HomePage> Login()
         {
             ReCaptchaSolution solution = null;
-            var token = await GetLoginCsrfToken();
 
+            // Requests home page.
+            // If we checked "remember me", it should redirect us to "/en/login" and then straight away to "/en".
+            // HTTP client will follow redirects by default.
+            var res = await Client.Get().DisableAutologin().Send();
+            if (IsLoggedIn(res))
+            {
+                // Session cookie has been refreshed and we are already logged in.
+                var home = new HomePage(res);
+                // Update CSRF token.
+                Client.Session.Token = home.Token;
+                return home;
+            }
+
+            var token = res.XPath().Find("//input[@id='_token']").GetAttribute("value");
             do
             {
-                var res = await TryLogin(token, solution);
-                var html = await res.Content.ReadAsStringAsync();
-
-                if (html.Contains("class=\"logout\">Logout</a>"))
+                res = await TryLogin(token, solution);
+                if (IsLoggedIn(res))
                 {
                     var home = new HomePage(res);
                     Client.Session.Token = home.Token;
                     return home;
                 }
+
+                var html = await res.Content.ReadAsStringAsync();
 
                 if (html.Contains("The challenge solution was incorrect."))
                     throw new Exception("The captcha challenge solution was incorrect.");
@@ -74,10 +87,9 @@ namespace Erpk.Modules
             return await req.Send();
         }
 
-        private async Task<string> GetLoginCsrfToken()
+        private static bool IsLoggedIn(Response res)
         {
-            var res = await Client.Get().DisableAutologin().Send();
-            return res.XPath().Find("//input[@id='_token']").GetAttribute("value");
+            return res.ContentAsString.Contains("class=\"logout\">Logout</a>");
         }
     }
 }
