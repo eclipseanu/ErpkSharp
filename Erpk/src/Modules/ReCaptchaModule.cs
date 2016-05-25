@@ -27,7 +27,7 @@ namespace Erpk.Modules
         {
             try
             {
-                var req = Client.Get(string.Format(BaseUrl + "challenge?k={0}", PublicKey));
+                var req = Client.Get(string.Format(BaseUrl + "challenge?k={0}", PublicKey)).DisableAutologin();
                 var res = await req.Send();
 
                 var html = await res.Content.ReadAsStringAsync();
@@ -46,7 +46,7 @@ namespace Erpk.Modules
         /// </summary>
         public async Task<Stream> GetCaptchaImageStream(string challenge)
         {
-            var req = Client.Get(string.Format(BaseUrl + "image?c={0}", challenge));
+            var req = Client.Get(string.Format(BaseUrl + "image?c={0}", challenge)).DisableAutologin();
             var res = await req.Send();
             return await res.Content.ReadAsStreamAsync();
         }
