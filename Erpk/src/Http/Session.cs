@@ -71,9 +71,14 @@ namespace Erpk.Http
         /// </summary>
         public bool IsFresh()
         {
-            var cookies = CookieContainer.GetCookies(Client.BaseUri);
-            var session = cookies.Cast<Cookie>().FirstOrDefault(cookie => cookie.Name == "erpk");
-            return Token != null && session != null && !session.Expired;
+            var cookies = CookieContainer.GetCookies(Client.BaseUri).Cast<Cookie>().ToList();
+
+            var session = cookies.FirstOrDefault(cookie => cookie.Name == "erpk");
+            var rememberMe = cookies.FirstOrDefault(cookie => cookie.Name == "erpk_rm");
+            
+            return Token != null
+                && session != null && !session.Expired
+                && rememberMe != null && !rememberMe.Expired;
         }
 
         /// <summary>
