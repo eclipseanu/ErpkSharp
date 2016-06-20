@@ -12,8 +12,13 @@ namespace Erpk.Http
     [JsonObject(MemberSerialization.OptIn)]
     public class Session
     {
-        private string _email;
         private string _token;
+
+        [JsonConstructor]
+        internal Session([JsonProperty("email")] string email)
+        {
+            Email = email;
+        }
 
         public Session(string email, string password)
         {
@@ -25,20 +30,12 @@ namespace Erpk.Http
         ///     Account's e-mail.
         /// </summary>
         [JsonProperty("email")]
-        public string Email
-        {
-            get { return _email; }
-            set
-            {
-                _email = value;
-                OnModified();
-            }
-        }
+        public string Email { get; }
 
         /// <summary>
         ///     Account's password.
         /// </summary>
-        public string Password { get; set; }
+        public string Password { get; internal set; }
 
         /// <summary>
         ///     CSRF token.

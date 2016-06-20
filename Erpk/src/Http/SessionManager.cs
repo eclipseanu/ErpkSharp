@@ -36,7 +36,9 @@ namespace Erpk.Http
             var json = File.ReadAllText(fi.FullName);
             try
             {
-                return JsonConvert.DeserializeObject<Session>(json);
+                var session = JsonConvert.DeserializeObject<Session>(json);
+                session.Password = password;
+                return session;
             }
             catch (Exception e)
             {
