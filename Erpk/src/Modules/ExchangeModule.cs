@@ -1,5 +1,4 @@
-﻿using System.Globalization;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Erpk.Models.Exchange;
 
 namespace Erpk.Modules
@@ -29,7 +28,7 @@ namespace Erpk.Modules
             var req = Client.Post("economy/exchange/purchase/").CSRF().XHR();
             req.Form.Add("page", 0);
             req.Form.Add("offerId", offerId);
-            req.Form.Add("amount", amount.ToString(CultureInfo.InvariantCulture));
+            req.Form.Add("amount", amount);
             req.AddReferer("economy/exchange-market/");
 
             var res = await req.Send();
