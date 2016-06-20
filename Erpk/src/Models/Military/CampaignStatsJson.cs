@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using Erpk.Json;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Erpk.Models.Military
@@ -8,7 +10,10 @@ namespace Erpk.Models.Military
         public JObject stats { get; set; }
         public JObject division { get; set; }
         public Dictionary<string, JRaw> logs { get; set; }
+
+        [JsonConverter(typeof(DictionaryOrEmptyArrayConverter<int, JRaw>))]
         public Dictionary<int, JRaw> fightersData { get; set; }
+
         public int opponentsInQueue { get; set; }
         public bool isInQueue { get; set; }
     }

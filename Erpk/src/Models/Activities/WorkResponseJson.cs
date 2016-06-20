@@ -7,6 +7,7 @@ namespace Erpk.Models.Activities
     {
         [JsonEnum(true)] Successful,
         [JsonEnum("already_worked")] AlreadyWorked,
+        [JsonEnum("not_worked")] NotWorked,
         [JsonEnum("employee")] NotEmployed,
         [JsonEnum("no_rest_points")] NotEnoughOvertimePoints,
         [JsonEnum("money")] EmployerHasNoMoney,
