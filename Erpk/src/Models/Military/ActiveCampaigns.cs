@@ -105,16 +105,22 @@ namespace Erpk.Models.Military
         public float Reward { get; set; }
 
         [JsonProperty("budget")]
-        public double Budget { get; set; }
+        public float Budget { get; set; }
 
         [JsonProperty("threshold")]
-        public double Threshold { get; set; }
+        public float Threshold { get; set; }
 
         [JsonProperty("sub_country")]
         public int AllowedCitizenship { get; set; }
 
         [JsonProperty("sub_mu")]
         public int AllowedMilitaryUnit { get; set; }
+
+        [JsonProperty("co_id")]
+        public int Id { get; set; }
+
+        [JsonProperty("group_id")]
+        public int BackerId { get; set; }
     }
 
     public class CountryJson

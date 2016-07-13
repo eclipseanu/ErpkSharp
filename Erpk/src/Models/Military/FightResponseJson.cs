@@ -11,6 +11,7 @@ namespace Erpk.Models.Military
         [JsonEnum("ENEMY_ATTACKED")] EnemyAttacked,
         [JsonEnum("LOW_HEALTH")] LowEnergy,
         [JsonEnum("ZONE_INACTIVE")] ZoneInactive,
+        [JsonEnum("BATTLE_WON")] BattleWon,
         [JsonEnum("SHOOT_LOCKOUT")] ShootLockout
     }
 
@@ -79,7 +80,7 @@ namespace Erpk.Models.Military
         public int hasBazookaAmmo { get; set; }
         public int level { get; set; }
         public int division { get; set; }
-        public bool bazookaAmmo { get; set; }
+        // public bool bazookaAmmo { get; set; }
         public int has_food_in_inventory { get; set; }
         public int food_remaining { get; set; }
         public long food_remaining_reset { get; set; }

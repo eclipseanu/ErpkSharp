@@ -26,7 +26,7 @@ namespace Erpk.Models.MyPlaces
             try
             {
                 var match = Regex.Match(script, "companies" + @"\s*=\s*(.+);");
-                Companies = JsonConvert.DeserializeObject<List<CompanyJson>>(match.Groups[1].Value);
+                Companies = JsonConvert.DeserializeObject<Dictionary<uint, CompanyJson>>(match.Groups[1].Value);
             }
             catch
             {
@@ -46,7 +46,7 @@ namespace Erpk.Models.MyPlaces
             }
         }
 
-        public List<CompanyJson> Companies { get; }
+        public Dictionary<uint, CompanyJson> Companies { get; }
         public CompaniesDetailsJson Details { get; }
         public bool AlreadyWorked { get; }
         public bool HasCaptcha { get; }
@@ -54,7 +54,7 @@ namespace Erpk.Models.MyPlaces
 
     public class CompanyJson
     {
-        public int id { get; set; }
+        public uint id { get; set; }
         public int industry_id { get; set; }
         public string industry_name { get; set; }
         public string industry_token { get; set; }
@@ -67,7 +67,7 @@ namespace Erpk.Models.MyPlaces
         public int preset_works { get; set; }
         public int preset_own_work { get; set; }
         public float base_production { get; set; }
-        public int resource_bonus { get; set; }
+        public float resource_bonus { get; set; }
         public int raw_usage { get; set; }
         public float production { get; set; }
         public string employee_limit { get; set; }
