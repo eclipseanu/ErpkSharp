@@ -44,7 +44,7 @@ namespace Erpk.Http
         /// <summary>
         ///     Base URI of eRepublik.
         /// </summary>
-        public static Uri BaseUri => new Uri("http://www.erepublik.com/en");
+        public static Uri BaseUri => new Uri("https://www.erepublik.com/en");
 
         /// <summary>
         ///     Gets or sets default HTTP User-Agent header.
