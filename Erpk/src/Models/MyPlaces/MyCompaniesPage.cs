@@ -55,6 +55,7 @@ namespace Erpk.Models.MyPlaces
     public class CompanyJson
     {
         public uint id { get; set; }
+        //public bool holding_company_id { get; set; } = false;
         public int industry_id { get; set; }
         public string industry_name { get; set; }
         public string industry_token { get; set; }
@@ -68,7 +69,7 @@ namespace Erpk.Models.MyPlaces
         public int preset_own_work { get; set; }
         public float base_production { get; set; }
         public float resource_bonus { get; set; }
-        public int raw_usage { get; set; }
+        public float raw_usage { get; set; }
         public float production { get; set; }
         public string employee_limit { get; set; }
         public string upgrade_url { get; set; }
