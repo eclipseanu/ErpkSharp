@@ -144,6 +144,14 @@ namespace Erpk.Modules
             return await DailyOrderAction();
         }
 
+        /// <summary>
+        ///     Previews the reward status of Daily Order.
+        /// </summary>
+        public async Task<GroupMissionsJson> PreviewDailyOrder()
+        {
+            return await DailyOrderAction(true);
+        }
+
         private async Task<GroupMissionsJson> DailyOrderAction(bool preview = false)
         {
             var req = Client.Post("military/group-missions").CSRF();
