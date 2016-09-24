@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using System.IO;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Erpk.Models.Military
 {
@@ -48,14 +50,32 @@ namespace Erpk.Models.Military
 
     public class GroupMissionsMessageJson
     {
+        // Might be bool or integer. Integer means how many DO kills have been dealt so far.
         [JsonProperty("completed")]
-        public bool Completed { get; set; }
+        public JRaw Completed { private get; set; }
 
         [JsonProperty("hasReward")]
         public bool HasReward { get; set; }
 
         [JsonProperty("successfullyRewarded", Required = Required.Default)]
         public bool SuccessfullyRewarded { get; set; }
+
+        public bool ParseCompleted()
+        {
+            var reader = new JsonTextReader(new StringReader(Completed.ToString()));
+            reader.Read();
+
+            switch (reader.TokenType)
+            {
+                case JsonToken.String:
+                case JsonToken.Integer:
+                    return false;
+                case JsonToken.Boolean:
+                    return (bool) reader.Value;
+                default:
+                    return false;
+            }
+        }
     }
 
     public class GroupMissionsJson
