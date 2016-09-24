@@ -32,6 +32,33 @@ namespace Erpk.Modules
         }
 
         /// <summary>
+        ///     Travels to specified region.
+        /// </summary>
+        public async Task<JObject> Travel(int countryId, int regionId, int battleId)
+        {
+            var req = Client.Post("main/travel").CSRF();
+            req.AddReferer("military/battlefield-new/" + battleId);
+            req.Form.Add("check", "moveAction");
+            req.Form.Add("toCountryId", countryId);
+            req.Form.Add("inRegionId", regionId);
+            req.Form.Add("battleId", battleId);
+            var res = await req.Send();
+            return res.JSON<JObject>();
+        }
+
+        /// <summary>
+        ///     Returns country regions list.
+        /// </summary>
+        public async Task<RegionsListJson> GetCountryRegions(int countryId)
+        {
+            var req = Client.Post("main/travel-popup").CSRF();
+            req.Form.Add("check", "getCountryRegions");
+            req.Form.Add("countryId", countryId);
+            var res = await req.Send();
+            return res.JSON<RegionsListJson>();
+        }
+
+        /// <summary>
         ///     Collects reward from Daily Tasks.
         /// </summary>
         public async Task<DailyTasksResponseJson> CollectDailyTasksReward()

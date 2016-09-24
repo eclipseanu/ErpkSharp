@@ -64,6 +64,7 @@
     <Compile Include="src\Models\Common\EnergyState.cs" />
     <Compile Include="src\Models\Common\GroupMember.cs" />
     <Compile Include="src\Models\Common\MessageDeliveryResponse.cs" />
+    <Compile Include="src\Models\Common\RegionJson.cs" />
     <Compile Include="src\Models\Market\MarketBuyResponseJson.cs" />
     <Compile Include="src\Models\Market\MarketOffersJson.cs" />
     <Compile Include="src\Models\Military\ActiveCampaigns.cs" />

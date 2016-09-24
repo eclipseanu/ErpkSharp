@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Erpk.Json;
 using Newtonsoft.Json;
@@ -21,6 +22,46 @@ namespace Erpk.Models.Military
 
         [JsonProperty("countries")]
         public Dictionary<int, CountryJson> Countries { get; set; }
+
+        /// <summary>
+        /// </summary>
+        public IEnumerable<SideTravelState> GetSidesTravelState(int campaignId, int residenceCountryId)
+        {
+            var allies = Countries[residenceCountryId].Allies;
+            var campaign = Campaigns[campaignId];
+
+            if (campaign.IsResistanceWar)
+            {
+                var travelNeeded = campaign.Defender.CountryId != residenceCountryId;
+
+                var countriesToTravel = travelNeeded
+                    ? new List<CountryJson> {Countries[campaign.Defender.CountryId]}
+                    : Enumerable.Empty<CountryJson>();
+
+                return campaign.Sides.Select(s => new SideTravelState(s, travelNeeded, countriesToTravel));
+            }
+
+            return campaign.Sides.Select(s => new SideTravelState(
+                s,
+                s.CountryId != residenceCountryId && !allies.Contains(s.CountryId),
+                Countries.Values.Where(c => c.Id == s.CountryId || Countries[c.Id].Allies.Contains(s.CountryId))
+                )
+                );
+        }
+    }
+
+    public class SideTravelState
+    {
+        public SideTravelState(SideJson side, bool travelNeeded, IEnumerable<CountryJson> whereToTravel)
+        {
+            Side = side;
+            TravelNeeded = travelNeeded;
+            WhereToTravel = whereToTravel;
+        }
+
+        public SideJson Side { get; }
+        public bool TravelNeeded { get; }
+        public IEnumerable<CountryJson> WhereToTravel { get; }
     }
 
     public class CampaignJson
