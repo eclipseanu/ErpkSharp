@@ -42,5 +42,10 @@ namespace Erpk.Models.Common
         public bool HasFood { get; set; }
         public int Total => Current + Recoverable;
         public bool CanEat => HasFood && Recoverable > 0 && Current < Maximum;
+
+        public override string ToString()
+        {
+            return $"{Current}/{Maximum} (+{Recoverable})";
+        }
     }
 }
