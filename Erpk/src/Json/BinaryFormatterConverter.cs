@@ -1,7 +1,10 @@
 ﻿using System;
+using Newtonsoft.Json;
+
+#if NET461
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using Newtonsoft.Json;
+#endif
 
 namespace Erpk.Json
 {
@@ -12,6 +15,7 @@ namespace Erpk.Json
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
+#if NET461
             if (value == null)
             {
                 writer.WriteNull();
@@ -24,11 +28,15 @@ namespace Erpk.Json
                 formatter.Serialize(stream, value);
                 writer.WriteValue(stream.ToArray());
             }
+#else
+            throw new NotImplementedException();
+#endif
         }
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue,
             JsonSerializer serializer)
         {
+#if NET461
             switch (reader.TokenType)
             {
                 case JsonToken.Null:
@@ -46,6 +54,9 @@ namespace Erpk.Json
             }
 
             throw new JsonSerializationException("Unexpected token when parsing binary.");
+#else
+            throw new NotImplementedException();
+#endif
         }
 
         public override bool CanConvert(Type objectType) => true;

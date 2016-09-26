@@ -54,8 +54,10 @@ namespace Erpk.Http
         /// <summary>
         ///     Holds HTTP cookies.
         /// </summary>
+#if NET461
         [JsonProperty("cookies")]
         [JsonConverter(typeof(BinaryFormatterConverter))]
+#endif
         public CookieContainer CookieContainer { get; set; } = new CookieContainer();
 
         /// <summary>

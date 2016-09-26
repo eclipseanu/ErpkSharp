@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Reflection;
 using Newtonsoft.Json;
 
 namespace Erpk.Json
@@ -32,6 +33,6 @@ namespace Erpk.Json
             return matchingField.GetValue(null);
         }
 
-        public override bool CanConvert(Type objectType) => objectType.IsEnum;
+        public override bool CanConvert(Type objectType) => objectType.GetTypeInfo().IsEnum;
     }
 }

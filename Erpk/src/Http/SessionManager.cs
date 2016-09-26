@@ -72,7 +72,7 @@ namespace Erpk.Http
 
         private static string Hash(string input)
         {
-            var hash = new SHA1Managed().ComputeHash(Encoding.UTF8.GetBytes(input));
+            var hash = SHA1.Create().ComputeHash(Encoding.UTF8.GetBytes(input));
             return string.Join("", hash.Select(b => b.ToString("x2")).ToArray());
         }
     }
